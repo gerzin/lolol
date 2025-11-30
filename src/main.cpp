@@ -1,4 +1,5 @@
 #include "utils/framelimiter.hpp"
+#include <argparse/argparse.hpp>
 #include <atomic>
 #include <csignal>
 #include <cstdlib>
@@ -10,10 +11,13 @@ void signal_handler(int)
     gShouldExit.store(true);
 }
 
-auto main() -> int
+auto main(int argc, char **argv) -> int
 {
     std::signal(SIGINT, signal_handler);
     std::signal(SIGTERM, signal_handler);
+
+    argparse::ArgumentParser program("lolol");
+    program.add_description("Create a loopback video device and display your own content");
 
     try
     {

@@ -108,4 +108,30 @@ void VideoDevice::init_buffers() noexcept(false)
 
     xioctl(mHandle, VIDIOC_STREAMON, &mBufType);
 }
+
+void VideoDevice::display_frame(const Frame &frame) noexcept(false)
+{
+    v4l2_buffer buf{};
+    buf.type = V4L2_BUF_TYPE_VIDEO_OUTPUT;
+    buf.memory = V4L2_MEMORY_MMAP;
+
+    xioctl(mHandle, VIDIOC_DQBUF, &buf);
+
+    if (buf.index >= mBuffers.size())
+    {
+        throw std::runtime_error("Buffer index out of range");
+    }
+
+    Buffer &buffer = mBuffers[buf.index];
+
+    if (frame.data_size() > buffer.length)
+    {
+        throw std::runtime_error("Frame data size exceeds buffer length");
+    }
+
+    std::memcpy(buffer.start, frame.data(), frame.data_size());
+
+    xioctl(mHandle, VIDIOC_QBUF, &buf);
+}
+
 } // namespace lolol

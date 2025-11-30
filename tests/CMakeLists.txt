@@ -3,6 +3,7 @@ find_package(GTest CONFIG REQUIRED)
 # Create a library with the code we want to test (excluding main.cpp)
 add_library(lolol_lib
     ../src/videodevice.cpp
+    ../src/frame.cpp
     ../src/utils/framelimiter.cpp
 )
 
@@ -12,6 +13,7 @@ target_link_libraries(lolol_lib PUBLIC spdlog::spdlog)
 # Test executable
 add_executable(lolol_tests
     test_framelimiter.cpp
+    test_frame.cpp
 )
 
 target_link_libraries(lolol_tests
