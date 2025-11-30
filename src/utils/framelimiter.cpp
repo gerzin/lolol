@@ -16,9 +16,25 @@ FrameLimiter::~FrameLimiter()
     auto elapsed = frame_end - mFrameStart;
     auto sleep_time = mFrameDuration - elapsed;
 
-    if (sleep_time > std::chrono::nanoseconds::zero())
+    if (!mDisabled && sleep_time > std::chrono::nanoseconds::zero())
     {
         std::this_thread::sleep_for(sleep_time);
     }
 }
+
+bool FrameLimiter::is_disabled() const
+{
+    return mDisabled;
+}
+
+void FrameLimiter::disable()
+{
+    mDisabled = true;
+}
+
+void FrameLimiter::enable()
+{
+    mDisabled = false;
+}
+
 } // namespace lolol::utils

@@ -12,6 +12,7 @@ find_package(spdlog CONFIG REQUIRED)
 add_executable(lolol 
     src/main.cpp
     src/videodevice.cpp
+    src/devicemanager.cpp
     src/frame.cpp
     src/utils/framelimiter.cpp
 )

@@ -22,9 +22,23 @@ class FrameLimiter
     FrameLimiter &operator=(const FrameLimiter &) = delete;
     FrameLimiter(FrameLimiter &&) = delete;
     FrameLimiter &operator=(FrameLimiter &&) = delete;
+    /**
+     * @brief Check if the frame limiter is disabled.
+     * @return true if disabled, false otherwise.
+     */
+    [[nodiscard]] bool is_disabled() const;
+    /**
+     * @brief Disable the frame limiter, preventing it from sleeping.
+     */
+    void disable();
+    /**
+     * @brief Enable the frame limiter, allowing it to sleep to maintain frame rate.
+     */
+    void enable();
 
   private:
     std::chrono::nanoseconds mFrameDuration;
     std::chrono::steady_clock::time_point mFrameStart;
+    bool mDisabled{false};
 };
 } // namespace lolol::utils

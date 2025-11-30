@@ -1,3 +1,4 @@
+#include "devicemanager.hpp"
 #include "utils/framelimiter.hpp"
 #include <argparse/argparse.hpp>
 #include <atomic>
@@ -13,6 +14,7 @@ void signal_handler(int)
 
 auto main(int argc, char **argv) -> int
 {
+    using namespace lolol;
     std::signal(SIGINT, signal_handler);
     std::signal(SIGTERM, signal_handler);
 
@@ -21,6 +23,10 @@ auto main(int argc, char **argv) -> int
 
     try
     {
+        DeviceManager manager{"LOLOL Virtual Camera"};
+
+        auto &videoDevice = manager.get_video_device();
+
         while (!gShouldExit.load())
         {
             lolol::utils::FrameLimiter limiter{30};

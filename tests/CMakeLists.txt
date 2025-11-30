@@ -3,6 +3,7 @@ find_package(GTest CONFIG REQUIRED)
 # Create a library with the code we want to test (excluding main.cpp)
 add_library(lolol_lib
     ../src/videodevice.cpp
+    ../src/devicemanager.cpp
     ../src/frame.cpp
     ../src/utils/framelimiter.cpp
 )
