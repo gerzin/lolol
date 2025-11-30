@@ -22,9 +22,13 @@ class FrameLimiter
     FrameLimiter &operator=(const FrameLimiter &) = delete;
     FrameLimiter(FrameLimiter &&) = delete;
     FrameLimiter &operator=(FrameLimiter &&) = delete;
+    [[nodiscard]] bool is_disabled() const;
+    void disable();
+    void enable();
 
   private:
     std::chrono::nanoseconds mFrameDuration;
     std::chrono::steady_clock::time_point mFrameStart;
+    bool mDisabled{false};
 };
 } // namespace lolol::utils
